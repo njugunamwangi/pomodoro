@@ -5,11 +5,17 @@ function padTime(time) {
     return time.toString().padStart(2, '0')
 }
 
+const STATE = {
+    TITLE: 'Let the countdown begin',
+    TIME_LEFT: 25 * 60,
+    IS_RUNNING: false
+}
+
 export default function App() {
-    const [ title, setTitle ] = useState('Let the countdown begin')
-    const [ timeLeft, setTimeLeft ] = useState(25 * 60)
+    const [ title, setTitle ] = useState(STATE.TITLE)
+    const [ timeLeft, setTimeLeft ] = useState(STATE.TIME_LEFT)
     const intervalRef = useRef(null)
-    const [ isRunning, setIsRunning ] = useState(false)
+    const [ isRunning, setIsRunning ] = useState(STATE.IS_RUNNING)
 
     function startTimer() {
         if (intervalRef.current !== null) return;
