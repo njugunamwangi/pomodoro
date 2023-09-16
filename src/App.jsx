@@ -28,13 +28,15 @@ export default function App() {
 
     function stopTimer() {
         if (intervalRef.current === null) return;
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
         setTitle('Keep it up!')
         setIsRunning(false)
-        clearInterval(intervalRef.current)
     }
 
     function resetTimer() {
         clearInterval(intervalRef.current)
+        intervalRef.current = null
         setTitle("You wanna go another round?")
         setIsRunning(false)
         setTimeLeft(25 * 60)
