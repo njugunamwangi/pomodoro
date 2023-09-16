@@ -7,7 +7,7 @@ function padTime(time) {
 
 export default function App() {
     const [ title, setTitle ] = useState('Let the countdown begin')
-    const [ timeLeft, setTimeLeft ] = useState(10)
+    const [ timeLeft, setTimeLeft ] = useState(25 * 60)
     const intervalRef = useRef(null)
 
     function startTimer() {
@@ -16,7 +16,7 @@ export default function App() {
             setTimeLeft(
                 timeLeft => {
                     if (timeLeft >= 1) return timeLeft - 1
-
+                    resetTimer()
                     return 0
                 }
             )
@@ -28,8 +28,10 @@ export default function App() {
         clearInterval(intervalRef.current)
     }
 
-    const reset = () => {
-
+    function resetTimer() {
+        clearInterval(intervalRef.current)
+        setTitle("You wanna go another round?")
+        setTimeLeft(25 * 60)
     }
 
     const minutes = padTime(Math.floor(timeLeft / 60))
@@ -48,7 +50,7 @@ export default function App() {
                 <div className="flex space-x-4">
                     <button onClick={startTimer} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg shadow-md">Start</button>
                     <button onClick={stopTimer} className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow-md">Stop</button>
-                    <button className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg shadow-md">Reset</button>
+                    <button onClick={resetTimer} className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg shadow-md">Reset</button>
                 </div>
             </div>
         </div>
