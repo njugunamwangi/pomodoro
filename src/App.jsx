@@ -1,4 +1,9 @@
 import './App.css'
+import {useState} from "react";
+
+function padTime(time) {
+    return time.toString().padStart(2, '0')
+}
 
 function App() {
     const start = () => {
@@ -13,12 +18,16 @@ function App() {
 
     }
 
+    const [ timeLeft, setTimeLeft ] = useState(25*60)
+    const minutes = padTime(Math.floor(timeLeft / 60))
+    const seconds = padTime((timeLeft - minutes*60))
+
     return (
         <>
             <h1>
-                <span>00</span>
+                <span>{minutes}</span>
                 <span>:</span>
-                <span>00</span>
+                <span>{seconds}</span>
             </h1>
             <div className="card">
                 <button onClick={start}>
