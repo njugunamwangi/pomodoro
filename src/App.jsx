@@ -1,5 +1,5 @@
 import './App.css'
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 function padTime(time) {
     return time.toString().padStart(2, '0')
@@ -8,9 +8,11 @@ function padTime(time) {
 export default function App() {
     const [ title, setTitle ] = useState('Let the countdown begin')
     const [ timeLeft, setTimeLeft ] = useState(10)
+    const intervalRef = useRef(null)
 
     function startTimer() {
-        setInterval(() => {
+        setTitle(`You're doing great`)
+        intervalRef.current = setInterval(() => {
             setTimeLeft(
                 timeLeft => {
                     if (timeLeft >= 1) return timeLeft - 1
@@ -21,8 +23,9 @@ export default function App() {
         }, 1000)
     }
 
-    const stop = () => {
-
+    function stopTimer() {
+        setTitle('Keep it up!')
+        clearInterval(intervalRef.current)
     }
 
     const reset = () => {
@@ -44,7 +47,7 @@ export default function App() {
 
                 <div className="flex space-x-4">
                     <button onClick={startTimer} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg shadow-md">Start</button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow-md">Stop</button>
+                    <button onClick={stopTimer} className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow-md">Stop</button>
                     <button className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg shadow-md">Reset</button>
                 </div>
             </div>
